@@ -48,7 +48,7 @@ export default async function PoliciesPage() {
       </a>
 
       <a
-        href="/policies/infection-control-policy.pdf"
+        href="/policies/infectioncontrol-policy.pdf"
         target="_blank"
         rel="noreferrer"
         style={linkStyle}
