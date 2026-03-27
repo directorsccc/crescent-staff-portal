@@ -23,6 +23,7 @@ export default function NavBar() {
       <Link href="/forms" style={linkStyle}>Forms</Link>
       <Link href="/memos" style={linkStyle}>Staff Memos</Link>
       <Link href="/contact" style={linkStyle}>Contact Office</Link>
+      <Link href="/admin" style={linkStyle}>Admin</Link>
     </nav>
   );
 }
