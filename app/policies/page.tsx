@@ -30,6 +30,15 @@ export default async function PoliciesPage() {
       <p>Please select a policy below.</p>
 
       <a
+        href="/policies/carerspolicies.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        Carers Complete Policies
+      </a>
+      
+      <a
         href="/policies/medication-policy.pdf"
         target="_blank"
         rel="noreferrer"
