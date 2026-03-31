@@ -39,6 +39,24 @@ export default async function PoliciesPage() {
       </a>
       
       <a
+        href="/policies/codeofconduct.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        Carers Code Of Conduct
+      </a>
+
+     <a
+        href="/policies/falsenailpolicy.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        False Nails & Nail Varnish Policy
+      </a>
+
+      <a
         href="/policies/medication-policy.pdf"
         target="_blank"
         rel="noreferrer"
