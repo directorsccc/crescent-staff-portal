@@ -33,9 +33,9 @@ export default async function StaffReportPage() {
     throw new Error(usersError.message);
   }
 
-  const { data: receipts, error: receiptsError } = await supabase
-    .from("policy_receipts")
-    .select("user_id, policy_slug, acknowledged_at");
+const { data: receipts, error: receiptsError } = await supabaseAdmin
+  .from("policy_receipts")
+  .select("user_id, policy_slug, acknowledged_at");
 
   if (receiptsError) {
     throw new Error(receiptsError.message);
