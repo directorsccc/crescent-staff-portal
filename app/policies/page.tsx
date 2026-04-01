@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "../../lib/supabase-server";
 import NavBar from "../components/NavBar";
+import PolicyReceiptButton from "../components/PolicyReceiptButton";
 
 const linkStyle = {
   display: "block",
@@ -22,6 +23,15 @@ export default async function PoliciesPage() {
     redirect("/login");
   }
 
+  const { data: receipts } = await supabase
+    .from("policy_receipts")
+    .select("policy_slug, acknowledged_at")
+    .eq("user_id", data.user.id);
+
+  const receiptMap = new Map(
+    (receipts || []).map((receipt) => [receipt.policy_slug, receipt.acknowledged_at])
+  );
+
   return (
     <main style={{ padding: "40px", fontFamily: "Arial" }}>
       <NavBar />
@@ -37,7 +47,12 @@ export default async function PoliciesPage() {
       >
         Carers Complete Policies
       </a>
-      
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="carerspolicies"
+        initialAcknowledgedAt={receiptMap.get("carerspolicies") ?? null}
+      />
+
       <a
         href="/policies/codeofconduct.pdf"
         target="_blank"
@@ -46,8 +61,13 @@ export default async function PoliciesPage() {
       >
         Carers Code Of Conduct
       </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="codeofconduct"
+        initialAcknowledgedAt={receiptMap.get("codeofconduct") ?? null}
+      />
 
-     <a
+      <a
         href="/policies/falsenailpolicy.pdf"
         target="_blank"
         rel="noreferrer"
@@ -55,6 +75,11 @@ export default async function PoliciesPage() {
       >
         False Nails & Nail Varnish Policy
       </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="falsenailpolicy"
+        initialAcknowledgedAt={receiptMap.get("falsenailpolicy") ?? null}
+      />
 
       <a
         href="/policies/medication-policy.pdf"
@@ -64,6 +89,11 @@ export default async function PoliciesPage() {
       >
         Medication Policy
       </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="medication-policy"
+        initialAcknowledgedAt={receiptMap.get("medication-policy") ?? null}
+      />
 
       <a
         href="/policies/safeguarding-policy.pdf"
@@ -73,6 +103,11 @@ export default async function PoliciesPage() {
       >
         Safeguarding Policy
       </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="safeguarding-policy"
+        initialAcknowledgedAt={receiptMap.get("safeguarding-policy") ?? null}
+      />
 
       <a
         href="/policies/infectioncontrol-policy.pdf"
@@ -82,6 +117,11 @@ export default async function PoliciesPage() {
       >
         Infection Control Policy
       </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="infectioncontrol-policy"
+        initialAcknowledgedAt={receiptMap.get("infectioncontrol-policy") ?? null}
+      />
 
       <a
         href="/policies/health-safety-policy.pdf"
@@ -91,6 +131,11 @@ export default async function PoliciesPage() {
       >
         Health & Safety Policy
       </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="health-safety-policy"
+        initialAcknowledgedAt={receiptMap.get("health-safety-policy") ?? null}
+      />
 
       <a
         href="/policies/data-protection-gdpr-policy.pdf"
@@ -100,6 +145,11 @@ export default async function PoliciesPage() {
       >
         GDPR / Confidentiality Policy
       </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="data-protection-gdpr-policy"
+        initialAcknowledgedAt={receiptMap.get("data-protection-gdpr-policy") ?? null}
+      />
     </main>
   );
 }
