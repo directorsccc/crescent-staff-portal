@@ -4,7 +4,10 @@ import { createClient } from "../../lib/supabase-server";
 import { supabaseAdmin } from "../../lib/supabase-admin";
 
 const policies = [
-  "carerspolicies",
+  "carerspolicies1",
+  "carerspolicies2",
+  "carerspolicies3",
+  "carerspolicies4",
   "codeofconduct",
   "falsenailpolicy",
   "medication-policy",
