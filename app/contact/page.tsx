@@ -2,10 +2,16 @@ import { redirect } from "next/navigation";
 import { createClient } from "../../lib/supabase-server";
 import NavBar from "../components/NavBar";
 
-const linkStyle = {
-  color: "#003366",
+const buttonStyle = {
+  display: "block",
+  width: "100%",
+  padding: "16px",
+  marginBottom: "15px",
+  textAlign: "center" as const,
+  borderRadius: "10px",
   textDecoration: "none",
   fontWeight: "bold",
+  fontSize: "16px",
 };
 
 export default async function ContactPage() {
@@ -22,31 +28,47 @@ export default async function ContactPage() {
 
       <h1>Contact Office</h1>
       <p style={{ marginTop: "10px", color: "#666" }}>
-        Please use the appropriate contact depending on urgency.
+        Tap a button below to contact the office.
       </p>
 
-      <ul style={{ listStyle: "none", padding: 0, marginTop: "20px" }}>
-        <li style={{ marginBottom: "15px" }}>
-          📞 Office:{" "}
-          <a href="tel:02392738398" style={linkStyle}>
-            023 92 738 398
-          </a>
-        </li>
+      <div style={{ marginTop: "30px", maxWidth: "400px" }}>
+        {/* Office */}
+        <a
+          href="tel:02392738398"
+          style={{
+            ...buttonStyle,
+            backgroundColor: "#003366",
+            color: "white",
+          }}
+        >
+          📞 Call Office
+        </a>
 
-        <li style={{ marginBottom: "15px" }}>
-          📱 Out of Hours:{" "}
-          <a href="tel:07958789359" style={linkStyle}>
-            07958 789359
-          </a>
-        </li>
+        {/* Out of Hours */}
+        <a
+          href="tel:07958789359"
+          style={{
+            ...buttonStyle,
+            backgroundColor: "#cc0000",
+            color: "white",
+          }}
+        >
+          🚨 Out of Hours / Duty Supervisor
+        </a>
 
-        <li style={{ marginBottom: "15px" }}>
-          📧 Email (office hours only):{" "}
-          <a href="mailto:proofpoint@crescentcare.co.uk" style={linkStyle}>
-            proofpoint@crescentcare.co.uk
-          </a>
-        </li>
-      </ul>
+        {/* Email */}
+        <a
+          href="mailto:proofpoint@crescentcare.co.uk"
+          style={{
+            ...buttonStyle,
+            backgroundColor: "#f0f0f0",
+            color: "#003366",
+            border: "1px solid #ccc",
+          }}
+        >
+          📧 Email Office (Office Hours Only)
+        </a>
+      </div>
     </main>
   );
 }
