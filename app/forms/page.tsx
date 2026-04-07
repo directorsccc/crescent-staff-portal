@@ -38,6 +38,15 @@ export default async function FormsPage() {
         Holiday Request
       </a>
 
+      <a
+        href="https://www.emailmeform.com/builder/form/rX8SndT6e3"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        Suggestion or Problem Survey
+      </a>
+
     </main>
   );
 }
