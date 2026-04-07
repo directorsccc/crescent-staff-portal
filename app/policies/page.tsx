@@ -40,12 +40,54 @@ export default async function PoliciesPage() {
       <p>Please select a policy below.</p>
 
       <a
-        href="/policies/carerspolicies.pdf"
+        href="/policies/carerspolicies1.pdf"
         target="_blank"
         rel="noreferrer"
         style={linkStyle}
       >
-        Carers Complete Policies
+        Carers Complete Policies Part 1
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="carerspolicies"
+        initialAcknowledgedAt={receiptMap.get("carerspolicies") ?? null}
+      />
+
+      <a
+        href="/policies/carerspolicies2.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        Carers Complete Policies Part 2
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="carerspolicies"
+        initialAcknowledgedAt={receiptMap.get("carerspolicies") ?? null}
+      />
+
+      <a
+        href="/policies/carerspolicies3.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        Carers Complete Policies Part 3
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="carerspolicies"
+        initialAcknowledgedAt={receiptMap.get("carerspolicies") ?? null}
+      />
+
+      <a
+        href="/policies/carerspolicies4.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        Carers Complete Policies Part 4
       </a>
       <PolicyReceiptButton
         userId={data.user.id}
