@@ -49,7 +49,7 @@ export default async function PoliciesPage() {
       </a>
       <PolicyReceiptButton
         userId={data.user.id}
-        policySlug="carerspolicies"
+        policySlug="carerspolicies1"
         initialAcknowledgedAt={receiptMap.get("carerspolicies1") ?? null}
       />
 
@@ -63,7 +63,7 @@ export default async function PoliciesPage() {
       </a>
       <PolicyReceiptButton
         userId={data.user.id}
-        policySlug="carerspolicies"
+        policySlug="carerspolicies2"
         initialAcknowledgedAt={receiptMap.get("carerspolicies2") ?? null}
       />
 
