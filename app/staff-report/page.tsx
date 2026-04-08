@@ -71,7 +71,7 @@ export default async function StaffReportPage() {
         >
           <thead>
             <tr>
-              <th style={thStyle}>Staff Email</th>
+              <th style={thStyle}>Staff Name</th>
               {policies.map((policy) => (
                 <th key={policy} style={thStyle}>
                   {policy}
@@ -82,7 +82,9 @@ export default async function StaffReportPage() {
           <tbody>
             {usersData.users.map((user) => (
               <tr key={user.id}>
-                <td style={tdStyle}>{user.email}</td>
+                <td style={tdStyle}>
+  {user.user_metadata?.full_name || user.email}
+</td>
                 {policies.map((policy) => {
                   const receipt = receiptMap.get(`${user.id}-${policy}`);
                   return (
