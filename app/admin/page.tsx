@@ -41,7 +41,6 @@ export default async function AdminPage() {
       <h1>Admin Control Panel</h1>
       <p>Manage staff portal access below.</p>
 
-      {/* Add User */}
       <div
         style={{
           marginTop: "30px",
@@ -88,7 +87,6 @@ export default async function AdminPage() {
         </form>
       </div>
 
-      {/* User List */}
       <div style={{ marginTop: "40px" }}>
         <h2>Current Staff Users</h2>
 
@@ -112,7 +110,34 @@ export default async function AdminPage() {
             {users.map((user) => (
               <tr key={user.id}>
                 <td style={tdStyle}>
-                  {user.user_metadata?.full_name || "No name"}
+                  <form
+                    action="/api/admin/update-user-name"
+                    method="post"
+                    style={{
+                      display: "flex",
+                      gap: "8px",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <input type="hidden" name="userId" value={user.id} />
+                    <input
+                      type="text"
+                      name="name"
+                      defaultValue={user.user_metadata?.full_name || ""}
+                      placeholder="Enter name"
+                      style={{ padding: "8px", minWidth: "180px" }}
+                    />
+                    <button
+                      type="submit"
+                      style={{
+                        padding: "8px 12px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Save
+                    </button>
+                  </form>
                 </td>
 
                 <td style={tdStyle}>{user.email}</td>
