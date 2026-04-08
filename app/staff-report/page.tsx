@@ -30,15 +30,18 @@ export default async function StaffReportPage() {
   }
 
   const { data: usersData, error: usersError } =
-    await supabaseAdmin.auth.admin.listUsers();
+    await supabaseAdmin.auth.admin.listUsers({
+      page: 1,
+      perPage: 1000,
+    });
 
   if (usersError) {
     throw new Error(usersError.message);
   }
 
-const { data: receipts, error: receiptsError } = await supabaseAdmin
-  .from("policy_receipts")
-  .select("user_id, policy_slug, acknowledged_at");
+  const { data: receipts, error: receiptsError } = await supabaseAdmin
+    .from("policy_receipts")
+    .select("user_id, policy_slug, acknowledged_at");
 
   if (receiptsError) {
     throw new Error(receiptsError.message);
