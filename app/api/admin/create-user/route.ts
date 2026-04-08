@@ -11,6 +11,7 @@ export async function POST(request: Request) {
   }
 
   const formData = await request.formData();
+  const name = formData.get("name") as string;
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
@@ -18,6 +19,9 @@ export async function POST(request: Request) {
     email,
     password,
     email_confirm: true,
+    user_metadata: {
+      full_name: name,
+    },
   });
 
   if (error) {

@@ -4,13 +4,20 @@ import { createClient } from "../../lib/supabase-server";
 import { supabaseAdmin } from "../../lib/supabase-admin";
 
 async function getUsers() {
-  const { data, error } = await supabaseAdmin.auth.admin.listUsers();
+  const { data, error } = await supabaseAdmin.auth.admin.listUsers({
+    page: 1,
+    perPage: 1000,
+  });
 
   if (error) {
     throw new Error(error.message);
   }
 
-  return data.users;
+  return data.users.sort((a, b) =>
+    (a.user_metadata?.full_name || "").localeCompare(
+      b.user_metadata?.full_name || ""
+    )
+  );
 }
 
 export default async function AdminPage() {
@@ -34,6 +41,7 @@ export default async function AdminPage() {
       <h1>Admin Control Panel</h1>
       <p>Manage staff portal access below.</p>
 
+      {/* Add User */}
       <div
         style={{
           marginTop: "30px",
@@ -44,11 +52,20 @@ export default async function AdminPage() {
         }}
       >
         <h2>Add Staff User</h2>
+
         <form
           action="/api/admin/create-user"
           method="post"
           style={{ display: "grid", gap: "12px", maxWidth: "500px" }}
         >
+          <input
+            type="text"
+            name="name"
+            placeholder="Staff full name"
+            required
+            style={{ padding: "10px" }}
+          />
+
           <input
             type="email"
             name="email"
@@ -56,6 +73,7 @@ export default async function AdminPage() {
             required
             style={{ padding: "10px" }}
           />
+
           <input
             type="password"
             name="password"
@@ -63,12 +81,14 @@ export default async function AdminPage() {
             required
             style={{ padding: "10px" }}
           />
+
           <button type="submit" style={{ padding: "10px" }}>
             Create User
           </button>
         </form>
       </div>
 
+      {/* User List */}
       <div style={{ marginTop: "40px" }}>
         <h2>Current Staff Users</h2>
 
@@ -81,20 +101,28 @@ export default async function AdminPage() {
         >
           <thead>
             <tr>
+              <th style={thStyle}>Name</th>
               <th style={thStyle}>Email</th>
               <th style={thStyle}>Created</th>
               <th style={thStyle}>Action</th>
             </tr>
           </thead>
+
           <tbody>
             {users.map((user) => (
               <tr key={user.id}>
+                <td style={tdStyle}>
+                  {user.user_metadata?.full_name || "No name"}
+                </td>
+
                 <td style={tdStyle}>{user.email}</td>
+
                 <td style={tdStyle}>
                   {user.created_at
                     ? new Date(user.created_at).toLocaleString()
                     : "N/A"}
                 </td>
+
                 <td style={tdStyle}>
                   {user.email !== process.env.ADMIN_EMAIL ? (
                     <form action="/api/admin/delete-user" method="post">
