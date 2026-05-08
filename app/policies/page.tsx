@@ -192,6 +192,162 @@ export default async function PoliciesPage() {
         policySlug="data-protection-gdpr-policy"
         initialAcknowledgedAt={receiptMap.get("data-protection-gdpr-policy") ?? null}
       />
+      <a
+        href="/policies/backfacts.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        Back Facts Sheet
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="backfacts"
+        initialAcknowledgedAt={receiptMap.get("backfacts") ?? null}
+      />
+      <a
+        href="/policies/bedbath_wash.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        Bedbath & Washing Sheet
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="bedbath_wash"
+        initialAcknowledgedAt={receiptMap.get("bedbath_wash") ?? null}
+      />
+      <a
+        href="/policies/bristol_stool_chart.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        Bristol Stool Chart
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="bristol_stool_chart"
+        initialAcknowledgedAt={receiptMap.get("bristol_stool_chart") ?? null}
+      />
+      <a
+        href="/policies/change_colostomy.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        Changing Colostomy Bag Factsheet
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="change_colostomy"
+        initialAcknowledgedAt={receiptMap.get("change_colostomy") ?? null}
+      />
+      <a
+        href="/policies/convene.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        Convene Factsheet
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="convene"
+        initialAcknowledgedAt={receiptMap.get("convene") ?? null}
+      />
+      <a
+        href="/policies/cookie_check.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        M & H Cookie Checklist
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="cookie_check"
+        initialAcknowledgedAt={receiptMap.get("cookie_check") ?? null}
+      />
+      <a
+        href="/policies/job_sheets_for_carers.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        Job Sheets For Carers
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="job_sheets_for_carers"
+        initialAcknowledgedAt={receiptMap.get("job_sheets_for_carers") ?? null}
+      />
+      <a
+        href="/policies/mca.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        5 Principles of the Mental Capacity Act
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="mca"
+        initialAcknowledgedAt={receiptMap.get("mca") ?? null}
+      />
+      <a
+        href="/policies/piece_urostomy_bag.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        Piece Urostomy Bag Factsheet
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="piece_urostomy_bag"
+        initialAcknowledgedAt={receiptMap.get("piece_urostomy_bag") ?? null}
+      />
+      <a
+        href="/policies/pressure_sores.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        Pressure Sore Factsheet
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="pressure_sores"
+        initialAcknowledgedAt={receiptMap.get("pressure_sores") ?? null}
+      />
+      <a
+        href="/policies/urinary_catheter.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        Urinary Catheter Factsheet
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="urinary_catheter"
+        initialAcknowledgedAt={receiptMap.get("urinary_catheter") ?? null}
+      />
+      <a
+        href="/policies/wheelchair_safety.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        Wheelchair Safety Factsheet
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="wheelchair_safety"
+        initialAcknowledgedAt={receiptMap.get("wheelchair_safety") ?? null}
+      />
     </main>
   );
 }

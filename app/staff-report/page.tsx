@@ -15,6 +15,19 @@ const policies = [
   "infectioncontrol-policy",
   "health-safety-policy",
   "data-protection-gdpr-policy",
+  "backfacts",
+  "bedbath-wash",
+  "bristol-stool-chart",
+  "careworkers_mca",
+  "change-colostomy",
+  "convene",
+  "cookie-check",
+  "job-sheets-for-carers",
+  "mca",
+  "piece-urostomy-bag",
+  "pressure-sores",
+  "urinary-catheter",
+  "wheelchair-safety",
 ];
 
 export default async function StaffReportPage() {
