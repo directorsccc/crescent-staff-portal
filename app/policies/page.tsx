@@ -348,6 +348,19 @@ export default async function PoliciesPage() {
         policySlug="wheelchair_safety"
         initialAcknowledgedAt={receiptMap.get("wheelchair_safety") ?? null}
       />
-    </main>
+       <a
+        href="/policies/freda_information.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        FREDA Information Factsheet
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="freda_information"
+        initialAcknowledgedAt={receiptMap.get("freda_information") ?? null}
+/>
+        </main>
   );
 }
