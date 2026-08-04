@@ -59,6 +59,16 @@ export default async function MemosPage() {
       </a>
       {/* You can add more memos below */}
 
+{/* Newsletter */}
+      <a
+        href="/memos/crescent_july_2026.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={memoStyle}
+      >
+        📄 July Newsletter 2026
+      </a>
+      {/* You can add more memos below */}
 
     </main>
   );
