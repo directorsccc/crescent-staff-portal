@@ -361,6 +361,19 @@ export default async function PoliciesPage() {
         policySlug="freda_information"
         initialAcknowledgedAt={receiptMap.get("freda_information") ?? null}
 />
+  <a
+        href="/policies/mca_fiveprinciples.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={linkStyle}
+      >
+        MCA Five Principles
+      </a>
+      <PolicyReceiptButton
+        userId={data.user.id}
+        policySlug="mca_fiveprinciples"
+        initialAcknowledgedAt={receiptMap.get("mca_fiveprinciples") ?? null}
+  
         </main>
   );
 }
