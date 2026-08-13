@@ -373,7 +373,7 @@ export default async function PoliciesPage() {
         userId={data.user.id}
         policySlug="mca_fiveprinciples"
         initialAcknowledgedAt={receiptMap.get("mca_fiveprinciples") ?? null}
-  
+ />
         </main>
   );
 }
