@@ -27,7 +27,7 @@ export default async function MemosPage() {
       <NavBar />
 
       <h1>Staff Memos</h1>
-      <p>Please read the latest updates below.</p>
+      <p>Please read the latest staff updates below.</p>
 
       {/* Newsletter */}
       <a
@@ -70,6 +70,15 @@ export default async function MemosPage() {
       </a>
       {/* You can add more memos below */}
 
+{/* Newsletter */}
+      <a
+        href="/memos/crescent_august_2026.pdf"
+        target="_blank"
+        rel="noreferrer"
+        style={memoStyle}
+      >
+        📄 August Newsletter 2026
+      </a>
     </main>
   );
 }
