@@ -86,9 +86,9 @@ export default async function MemosPage() {
         rel="noreferrer"
         style={memoStyle}
       >
-        📄 September 2026 Newsletter
+        📄 September Newsletter 2026 
       </a>
-      
+
       {/* You can add more memos below */}
     
     
