@@ -1,7 +1,12 @@
+
 import { redirect } from "next/navigation";
 import NavBar from "../components/NavBar";
 import { createClient } from "../../lib/supabase-server";
 import { supabaseAdmin } from "../../lib/supabase-admin";
+import {
+  canManageStaff,
+  isProtectedAdmin,
+} from "../../lib/admin-permissions";
 
 async function getUsers() {
   const { data, error } = await supabaseAdmin.auth.admin.listUsers({
@@ -28,7 +33,7 @@ export default async function AdminPage() {
     redirect("/login");
   }
 
-  if (data.user.email !== process.env.ADMIN_EMAIL) {
+  if (!canManageStaff(data.user.email)) {
     redirect("/dashboard");
   }
 
@@ -38,8 +43,8 @@ export default async function AdminPage() {
     <main style={{ padding: "40px", fontFamily: "Arial" }}>
       <NavBar />
 
-      <h1>Admin Control Panel</h1>
-      <p>Manage staff portal access below.</p>
+      <h1>Staff Management</h1>
+      <p>Add, update and remove staff portal accounts below.</p>
 
       <div
         style={{
@@ -55,7 +60,11 @@ export default async function AdminPage() {
         <form
           action="/api/admin/create-user"
           method="post"
-          style={{ display: "grid", gap: "12px", maxWidth: "500px" }}
+          style={{
+            display: "grid",
+            gap: "12px",
+            maxWidth: "500px",
+          }}
         >
           <input
             type="text"
@@ -107,67 +116,93 @@ export default async function AdminPage() {
           </thead>
 
           <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td style={tdStyle}>
-                  <form
-                    action="/api/admin/update-user-name"
-                    method="post"
-                    style={{
-                      display: "flex",
-                      gap: "8px",
-                      alignItems: "center",
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    <input type="hidden" name="userId" value={user.id} />
-                    <input
-                      type="text"
-                      name="name"
-                      defaultValue={user.user_metadata?.full_name || ""}
-                      placeholder="Enter name"
-                      style={{ padding: "8px", minWidth: "180px" }}
-                    />
-                    <button
-                      type="submit"
-                      style={{
-                        padding: "8px 12px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      Save
-                    </button>
-                  </form>
-                </td>
+            {users.map((user) => {
+              const protectedAccount = isProtectedAdmin(user.email);
 
-                <td style={tdStyle}>{user.email}</td>
-
-                <td style={tdStyle}>
-                  {user.created_at
-                    ? new Date(user.created_at).toLocaleString()
-                    : "N/A"}
-                </td>
-
-                <td style={tdStyle}>
-                  {user.email !== process.env.ADMIN_EMAIL ? (
-                    <form action="/api/admin/delete-user" method="post">
-                      <input type="hidden" name="userId" value={user.id} />
-                      <button
-                        type="submit"
+              return (
+                <tr key={user.id}>
+                  <td style={tdStyle}>
+                    {protectedAccount ? (
+                      user.user_metadata?.full_name ||
+                      "Administrator"
+                    ) : (
+                      <form
+                        action="/api/admin/update-user-name"
+                        method="post"
                         style={{
-                          padding: "8px 12px",
-                          cursor: "pointer",
+                          display: "flex",
+                          gap: "8px",
+                          alignItems: "center",
+                          flexWrap: "wrap",
                         }}
                       >
-                        Delete
-                      </button>
-                    </form>
-                  ) : (
-                    "Admin account"
-                  )}
-                </td>
-              </tr>
-            ))}
+                        <input
+                          type="hidden"
+                          name="userId"
+                          value={user.id}
+                        />
+                        <input
+                          type="text"
+                          name="name"
+                          defaultValue={
+                            user.user_metadata?.full_name || ""
+                          }
+                          placeholder="Enter name"
+                          required
+                          style={{
+                            padding: "8px",
+                            minWidth: "180px",
+                          }}
+                        />
+                        <button
+                          type="submit"
+                          style={{
+                            padding: "8px 12px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Save
+                        </button>
+                      </form>
+                    )}
+                  </td>
+
+                  <td style={tdStyle}>{user.email}</td>
+
+                  <td style={tdStyle}>
+                    {user.created_at
+                      ? new Date(user.created_at).toLocaleString()
+                      : "N/A"}
+                  </td>
+
+                  <td style={tdStyle}>
+                    {protectedAccount ? (
+                      "Protected administrator"
+                    ) : (
+                      <form
+                        action="/api/admin/delete-user"
+                        method="post"
+                      >
+                        <input
+                          type="hidden"
+                          name="userId"
+                          value={user.id}
+                        />
+                        <button
+                          type="submit"
+                          style={{
+                            padding: "8px 12px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </form>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -186,3 +221,4 @@ const tdStyle = {
   border: "1px solid #ccc",
   padding: "10px",
 };
+
