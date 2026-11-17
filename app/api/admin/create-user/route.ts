@@ -2,44 +2,19 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "../../../../lib/supabase-admin";
 import { createClient } from "../../../../lib/supabase-server";
-import {
-  canManageStaff,
-  isProtectedAdmin,
-} from "../../../../lib/admin-permissions";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
 
-  if (!data.user || !canManageStaff(data.user.email)) {
-    return NextResponse.redirect(
-      new URL("/dashboard", request.url),
-      303
-    );
+  if (!data.user || data.user.email !== process.env.ADMIN_EMAIL) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   const formData = await request.formData();
-
-  const name = String(formData.get("name") || "").trim();
-  const email = String(formData.get("email") || "")
-    .trim()
-    .toLowerCase();
-  const password = String(formData.get("password") || "");
-
-  if (!name || !email || password.length < 12) {
-    return NextResponse.redirect(
-      new URL("/admin?error=Invalid%20staff%20details", request.url),
-      303
-    );
-  }
-
-  // Prevent creation of accounts using protected administrator emails.
-  if (isProtectedAdmin(email)) {
-    return NextResponse.redirect(
-      new URL("/admin?error=Protected%20administrator%20email", request.url),
-      303
-    );
-  }
+  const name = formData.get("name") as string;
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
 
   const { error } = await supabaseAdmin.auth.admin.createUser({
     email,
@@ -55,13 +30,9 @@ export async function POST(request: Request) {
       new URL(
         `/admin?error=${encodeURIComponent(error.message)}`,
         request.url
-      ),
-      303
+      )
     );
   }
 
-  return NextResponse.redirect(
-    new URL("/admin", request.url),
-    303
-  );
+  return NextResponse.redirect(new URL("/admin", request.url));
 }

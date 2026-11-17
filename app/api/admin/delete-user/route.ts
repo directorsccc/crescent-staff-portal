@@ -2,16 +2,12 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "../../../../lib/supabase-admin";
 import { createClient } from "../../../../lib/supabase-server";
-import {
-  canManageStaff,
-  isProtectedAdmin,
-} from "../../../../lib/admin-permissions";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
 
-  if (!data.user || !canManageStaff(data.user.email)) {
+  if (!data.user || data.user.email !== process.env.ADMIN_EMAIL) {
     return NextResponse.redirect(
       new URL("/dashboard", request.url),
       303
@@ -28,27 +24,10 @@ export async function POST(request: Request) {
     );
   }
 
-  // Retrieve the target account from Supabase.
-  const { data: target, error: lookupError } =
-    await supabaseAdmin.auth.admin.getUserById(userId);
-
-  if (lookupError || !target.user) {
+  // Prevent the administrator from deleting their own account.
+  if (userId === data.user.id) {
     return NextResponse.redirect(
-      new URL("/admin?error=User%20not%20found", request.url),
-      303
-    );
-  }
-
-  // Never allow deletion of either administrator account.
-  if (
-    isProtectedAdmin(target.user.email) ||
-    target.user.id === data.user.id
-  ) {
-    return NextResponse.redirect(
-      new URL(
-        "/admin?error=Administrator%20accounts%20are%20protected",
-        request.url
-      ),
+      new URL("/admin?error=Cannot%20delete%20your%20own%20account", request.url),
       303
     );
   }

@@ -2,16 +2,12 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "../../../../lib/supabase-admin";
 import { createClient } from "../../../../lib/supabase-server";
-import {
-  canManageStaff,
-  isProtectedAdmin,
-} from "../../../../lib/admin-permissions";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
 
-  if (!data.user || !canManageStaff(data.user.email)) {
+  if (!data.user || data.user.email !== process.env.ADMIN_EMAIL) {
     return NextResponse.redirect(
       new URL("/dashboard", request.url),
       303
@@ -19,35 +15,12 @@ export async function POST(request: Request) {
   }
 
   const formData = await request.formData();
-
   const userId = String(formData.get("userId") || "").trim();
   const name = String(formData.get("name") || "").trim();
 
   if (!userId || !name) {
     return NextResponse.redirect(
       new URL("/admin?error=Invalid%20staff%20details", request.url),
-      303
-    );
-  }
-
-  // Retrieve the account before allowing any changes.
-  const { data: target, error: lookupError } =
-    await supabaseAdmin.auth.admin.getUserById(userId);
-
-  if (lookupError || !target.user) {
-    return NextResponse.redirect(
-      new URL("/admin?error=User%20not%20found", request.url),
-      303
-    );
-  }
-
-  // Protect administrator accounts from changes.
-  if (isProtectedAdmin(target.user.email)) {
-    return NextResponse.redirect(
-      new URL(
-        "/admin?error=Administrator%20accounts%20are%20protected",
-        request.url
-      ),
       303
     );
   }
